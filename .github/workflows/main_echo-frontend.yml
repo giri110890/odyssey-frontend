@@ -37,16 +37,25 @@ jobs:
       - name: Install dependencies with Yarn
         run: |
           yarn install --freeze-lockfile
-          yarn list next
 
       - name: Build the project with Yarn
         run: |
           yarn build
-          ls -l node_modules/next
-      - name: Verify build output directory
+          
+      # - name: Verify build output directory
+      #   run: |
+      #     ls -al
+      #     ls -al .next # For server-side rendering
+      - name: Copy static files
         run: |
-          ls -al
-          ls -al .next # For server-side rendering
+          cp -R ./public ./.next/standalone/public
+          cp -R ./.next/static ./.next/standalone/.next/static
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: ./.next/standalone
         
   deploy:
     runs-on: ubuntu-latest
@@ -56,11 +65,16 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: app
+          
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'Echo-frontend'
+          app-name: Echo-frontend
           slot-name: 'Production'
-          package: ./wwwroot
+          package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_23A38B2708524A4F80D6A9466BCC4164 }}

@@ -46,16 +46,16 @@ jobs:
       #   run: |
       #     ls -al
       #     ls -al .next # For server-side rendering
-      - name: Copy static files
-        run: |
-          cp -R ./public ./.next/standalone/public
-          cp -R ./.next/static ./.next/standalone/.next/static
+      # - name: Copy static files
+      #   run: |
+      #     cp -R ./public ./.next/standalone/public
+      #     cp -R ./.next/static ./.next/standalone/.next/static
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: app
-          path: ./.next/standalone
+          path: ./.next
         
   deploy:
     runs-on: ubuntu-latest

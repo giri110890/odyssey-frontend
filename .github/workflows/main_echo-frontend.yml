@@ -15,17 +15,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
+      
+      - name: Replace placeholders in config with secrets
+        run: |
+          sed -i "s|@cognito_host@|${{ secrets.COGNITO_HOST }}|g" config/env/app.config.common.js
+          sed -i "s|@cognito_app_client_id@|${{ secrets.COGNITO_APP_CLIENT_ID }}|g" config/env/app.config.common.js
+          sed -i "s|@cognito_pool_id@|${{ secrets.COGNITO_POOL_ID }}|g" config/env/app.config.common.js
+          sed -i "s|@AppConfig.svc@|${{ secrets.APP_CONFIG_SVC }}|g" config/env/app.config.common.js
+          sed -i "s|@cognito_app_redirect_path@|${{ secrets.COGNITO_APP_REDIRECT_PATH }}|g" config/env/app.config.common.js
+          sed -i "s|@cognito_app_redirect_logout_path@|${{ secrets.COGNITO_APP_REDIRECT_LOGOUT_PATH }}|g" config/env/app.config.common.js
+      
       - name: npm install, build, and test
         run: |
           npm install
           npm run build
-      # - name: Zip artifact for deployment
-      #   run: zip release.zip ./* -r
-      # - name: Upload artifact for deployment job
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: node-app
-      #     path: release.zip
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -34,13 +37,6 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     
     steps:
-      # - name: Download artifact from build job
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: node-app
-      # - name: Unzip artifact for deployment
-      #   run: unzip release.zip
-      
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3

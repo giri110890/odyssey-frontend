@@ -50,12 +50,14 @@ jobs:
       #   run: |
       #     cp -R ./public ./.next/standalone/public
       #     cp -R ./.next/static ./.next/standalone/.next/static
+      - name: Zip artifact for deployment
+        run: zip release.zip . -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: app
-          path: ./.next
+          path: release.zip
         
   deploy:
     runs-on: ubuntu-latest
@@ -69,6 +71,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: app
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
           
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -77,5 +81,4 @@ jobs:
           app-name: Echo-frontend
           slot-name: 'Production'
           package: .
-          clean: true
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_23A38B2708524A4F80D6A9466BCC4164 }}

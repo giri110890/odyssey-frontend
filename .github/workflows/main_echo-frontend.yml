@@ -34,13 +34,13 @@ jobs:
       #   run: |
       #     npm install
       #     npm run build
-      - name: Install dependencies with Yarn
-        run: |
-          yarn install --freeze-lockfile
+      # - name: Install dependencies with Yarn
+      #   run: |
+      #     yarn install --freeze-lockfile
 
-      - name: Build the project with Yarn
-        run: |
-          yarn build
+      # - name: Build the project with Yarn
+      #   run: |
+      #     yarn build
           
       # - name: Verify build output directory
       #   run: |
@@ -81,4 +81,5 @@ jobs:
           app-name: Echo-frontend
           slot-name: 'Production'
           package: .
+          clean: true
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_23A38B2708524A4F80D6A9466BCC4164 }}

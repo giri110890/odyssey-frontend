@@ -6,8 +6,8 @@ var AppConfig = {};
 AppConfig.aws = {
 	options: {
 		region: "us-east-1",
-		accessKeyId: "",
-		secretAccessKey: "",
+		accessKeyId: "@aws_access_id@",
+		secretAccessKey: "@aws_access_secret@",
 		apiVersion: "latest"
 	},
 }

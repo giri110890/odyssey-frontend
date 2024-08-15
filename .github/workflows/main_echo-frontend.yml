@@ -46,7 +46,6 @@ jobs:
       - name: Verify build output directory
         run: |
           ls -al
-          ls -al out
           ls -al .next # For server-side rendering
         
   deploy:

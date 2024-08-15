@@ -40,7 +40,9 @@ jobs:
           yarn list next
 
       - name: Build the project with Yarn
-        run: yarn build
+        run: |
+          yarn build
+          ls -l node_modules/next
         
   deploy:
     runs-on: ubuntu-latest

@@ -26,8 +26,10 @@ jobs:
           sed -i "s|@AppConfig.svc@|${{ secrets.APP_CONFIG_SVC }}|g" config/application.config.common.js
           sed -i "s|@cognito_app_redirect_path@|${{ secrets.COGNITO_APP_REDIRECT_PATH }}|g" config/application.config.common.js
           sed -i "s|@cognito_app_redirect_logout_path@|${{ secrets.COGNITO_APP_REDIRECT_LOGOUT_PATH }}|g" config/application.config.common.js
-          sed -i "s|@AppConfig.clarity_key@|${{ secrets.CLARITY_KEY }}|g" config/application.config.common.js
-          sed -i "s|@AppConfig.frontend@|${{ secrets.BASEURL }}|g" config/application.config.common.js
+          sed -i "s|@AppConfig.clarity_key@|${{ secrets.CLARITY_KEY }}|g" config/env/application.config.dev-2.js
+          sed -i "s|@AppConfig.frontend@|${{ secrets.BASEURL }}|g" config/env/application.config.dev-2.js
+          sed -i "s|@AppConfig.svc@|${{ secrets.APP_CONFIG_SVC }}|g" config/env/application.config.dev-2.js
+         
       # - name: npm install, build, and test
       #   run: |
       #     npm install
@@ -37,9 +39,7 @@ jobs:
 
       - name: Build the project with Yarn
         run: yarn build
-
-      - name: Start the application with Yarn
-        run: yarn start
+        
   deploy:
     runs-on: ubuntu-latest
     needs: build

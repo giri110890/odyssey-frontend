@@ -45,6 +45,8 @@ jobs:
           ls -l node_modules/next
       - name: Verify build output directory
         run: |
+          ls -al
+          ls -al out
           ls -al .next # For server-side rendering
         
   deploy:
@@ -61,5 +63,5 @@ jobs:
         with:
           app-name: 'Echo-frontend'
           slot-name: 'Production'
-          package: .next
+          package: ./
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_23A38B2708524A4F80D6A9466BCC4164 }}

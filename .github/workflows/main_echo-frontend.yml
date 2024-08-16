@@ -51,7 +51,7 @@ jobs:
       #     cp -R ./public ./.next/standalone/public
       #     cp -R ./.next/static ./.next/standalone/.next/static
       - name: Zip artifact for deployment
-        run: zip -r release.zip . -x "*/\.*"
+        run: zip -r release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4

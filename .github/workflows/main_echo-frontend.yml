@@ -40,7 +40,7 @@ jobs:
 
       - name: Build the project with Yarn
         run: |
-          yarn build
+          yarn dev
           
       # - name: Verify build output directory
       #   run: |

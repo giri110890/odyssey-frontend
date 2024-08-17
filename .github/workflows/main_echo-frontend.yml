@@ -81,5 +81,4 @@ jobs:
           app-name: Echo-frontend
           slot-name: 'Production'
           package: .
-          clean: true
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_23A38B2708524A4F80D6A9466BCC4164 }}

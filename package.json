@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "startAzure": "./node_modules/next/dist/bin/next start"
   },
   "dependencies": {
     "@next-tools/dynamic": "^0.0.11",

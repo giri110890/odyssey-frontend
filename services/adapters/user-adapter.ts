@@ -23,12 +23,16 @@ const onLogin = async (emailID) => {
       // This is the first call to the backend - TODO: find a more robust place to set
       // the default with credentials.
       axios.defaults.withCredentials = true;
+      const accessToken = Cookies.get('access_token');
       const { data } = await axios.get(
         AppConfig.svc + `on_login/`,
         {
           params: {
             email: emailID,
           },
+          headers: {
+            "Authorization" : `Bearer ${accessToken}`
+          }
         },
       );
     

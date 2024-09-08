@@ -1,6 +1,4 @@
-import axios from "axios";
-import Cookies from "js-cookie";
-import jwt from "jsonwebtoken";
+import axiosInstance from "./axiosInstance.js";
 import AppConfig from "../../config/application.config";
 async function fetchNotificationsForUser(userInfo) {
     const getNotificationsByRole = (userInfo) =>{
@@ -17,7 +15,7 @@ async function fetchNotificationsForUser(userInfo) {
     }
     // console.log(userInfo)
     try{
-        const { data } = await axios.get(
+        const { data } = await axiosInstance.get(
             AppConfig.svc + `get_notification/`, {
             params:{
                 user_id : getNotificationsByRole(userInfo)
@@ -32,7 +30,7 @@ async function fetchNotificationsForUser(userInfo) {
 }
 async function markNotificationsAsRead(notification_ids){
     try {
-        const {data} =await axios.post(
+        const {data} =await axiosInstance.post(
             AppConfig.svc + `update_notification/`, 
             {notification_ids:notification_ids}
         )

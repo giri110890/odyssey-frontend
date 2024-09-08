@@ -1,11 +1,11 @@
-import axios, { all } from "axios";
+import axiosInstance from "./axiosInstance.js";
 import AppConfig from "../../config/application.config";
 
 const fetchAllShadowManagerProperties = async (shadow_manager_id) => {
     debugger;
     try {
       // let {setAllProperties} = useAllTenants();
-      const { data } = await axios.get(
+      const { data } = await axiosInstance.get(
         AppConfig.svc + `list_shadow_manager_properties/`,{
             params:{
                 shadow_user_id:shadow_manager_id

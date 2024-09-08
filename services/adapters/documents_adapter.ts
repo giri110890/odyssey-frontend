@@ -1,9 +1,9 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance.js";
 import AppConfig from "../../config/application.config";
 
 const deleteDocument = async (userInfo, formId) => {
     try {
-      const { data } = await axios.delete(
+      const { data } = await axiosInstance.delete(
         AppConfig.svc + `delete/file/`,
         {
           params: {

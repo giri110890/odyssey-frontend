@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import CountUp from "react-countup";
 import "./property-details.scss";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import AppConfig from "../../../../config/application.config";
 import DonutChart from "../../../../components/donut-chart/donut-chart";
 import TableView from "../../../../components/table/table";
@@ -11,6 +10,7 @@ import Modal, { ModalTypes } from "../../../../components/modal/modal";
 import AddUnits from "../add-units/add-units";
 import Input from "../../../../components/input/input";
 import Button from "../../../../components/button/button";
+import axiosInstance from "../../../../services/adapters/axiosInstance";
 import PropertyAdapter from "../../../../services/adapters/properties-adapter";
 import { useAllProperties } from "../../../../services/hooks/useAllProperties";
 import { useNotifications } from "../../../../services/hooks/useNotifications";
@@ -470,7 +470,7 @@ const PropertyDetails = ({ params, searchParams }: PropertyDetailsProps) => {
       const formData = new FormData();
       formData.append("myFile", selectedFile, selectedFile.name);
 
-      const { data } = await axios.post(
+      const { data } = await axiosInstance.post(
         AppConfig.svc + `bulk_upload_units/`,
         formData,
         {

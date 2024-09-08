@@ -1,10 +1,9 @@
-import axios, { all } from "axios";
+import axiosInstance from "./axiosInstance.js";
 import AppConfig from "../../config/application.config";
-import { useAllProperties } from "../hooks/useAllProperties";
 const addProperty = async (property, userInfo) => {
   try {
     // let {setAllProperties} = useAllProperties();
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `add_property/`,
       property,
       {
@@ -23,7 +22,7 @@ const addProperty = async (property, userInfo) => {
 const fetchAllProperties = async (userInfo) => {
   try {
     // let {setAllProperties} = useAllProperties();
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `all_properties/` + userInfo?.sub
     );
     // console.log(data);
@@ -37,7 +36,7 @@ const fetchAllProperties = async (userInfo) => {
 const fetchPropertiesOfPropertyManager = async (userInfo) => {
   try {
     // let {setAllProperties} = useAllProperties();
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `all_properties/` + userInfo?.id
     );
     // console.log(data);
@@ -52,7 +51,7 @@ const fetchPropertiesOfPropertyManager = async (userInfo) => {
 const fetchAllDeletedProperties = async (userInfo) => {
   try {
     // let {setAllProperties} = useAllProperties();
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `all_deleted_properties/` + userInfo?.sub
     );
     // console.log(data);
@@ -65,7 +64,7 @@ const fetchAllDeletedProperties = async (userInfo) => {
 
 const editProperty = async (existingProperty, userInfo, propertyInfo) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `property/`,
       existingProperty,
       {
@@ -84,7 +83,7 @@ const editProperty = async (existingProperty, userInfo, propertyInfo) => {
 
 const addUnits = async (propertyID, unit) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `create_unit/`,
       unit,
       {
@@ -101,7 +100,7 @@ const addUnits = async (propertyID, unit) => {
 // edit unit
 const editUnit = async (propertyID, unitId, unit, userInfo) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `update_unit/`,
       unit,
       {
@@ -120,7 +119,7 @@ const editUnit = async (propertyID, unitId, unit, userInfo) => {
 // delete unit
 const deleteUnit = async (propertyID, unitId, userInfo) => {
   try {
-    const { data } = await axios.delete(
+    const { data } = await axiosInstance.delete(
       AppConfig.svc + `delete_unit/`,
       {
         params: {
@@ -138,7 +137,7 @@ const deleteUnit = async (propertyID, unitId, userInfo) => {
 // delete property (delete from db)
 const deleteProperty = async (propertyID, userInfo) => {
   try {
-    const { data } = await axios.delete(
+    const { data } = await axiosInstance.delete(
       AppConfig.svc + `delete_property/`,
       {
         params: {
@@ -155,7 +154,7 @@ const deleteProperty = async (propertyID, userInfo) => {
 // soft delete by changing its status
 const softDeleteProperty = async (propertyID, userInfo) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `soft_delete_property/`,
       {},
       {
@@ -173,7 +172,7 @@ const softDeleteProperty = async (propertyID, userInfo) => {
 
 const addFiles = async (file, propertyID, rentalID, tenantID) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `upload/document/`,
       file,
       {
@@ -192,7 +191,7 @@ const addFiles = async (file, propertyID, rentalID, tenantID) => {
 
 const getPropertyByID = async (property_id) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `property/` + property_id
     );
     return data;
@@ -203,7 +202,7 @@ const getPropertyByID = async (property_id) => {
 
 const getRentalsByPropertyID = async (property_id) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `all_rentals/` + property_id
     );
     return data;
@@ -213,7 +212,7 @@ const getRentalsByPropertyID = async (property_id) => {
 };
 const getPropertyByRentalID = async (rental_id) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `get_rental_details/`, {
       params: {
         rental_id: rental_id
@@ -228,7 +227,7 @@ const getPropertyByRentalID = async (rental_id) => {
 };
 const getProofsListing = async (property_manager_id, property_id, rentalID, tenantID) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `view/document/`, {
       params: {
         property_manager_id: property_manager_id,
@@ -246,7 +245,7 @@ const getProofsListing = async (property_manager_id, property_id, rentalID, tena
 };
 const getSignedForms = async (property_manager_id, property_id, rentalID, tenantID) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `view/signed/document/`, {
       params: {
         property_manager_id: property_manager_id,
@@ -264,7 +263,7 @@ const getSignedForms = async (property_manager_id, property_id, rentalID, tenant
 };
 const downloadDocuments = async (documentName) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `download/document/`,
       {
         responseType: 'blob',
@@ -281,7 +280,7 @@ const downloadDocuments = async (documentName) => {
 
 const addSpecialIOnstructions = async (propertyID, propertyManagerID, specialInfo) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `add_special_instructions`, specialInfo, {
       params: {
         property_id: propertyID,
@@ -302,7 +301,7 @@ const getCompletelySignedForms = async (property_manager_id, property_id, rental
   // console.log(rentalID)
   // console.log(tenantID)
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `view/propertymanager/signed/document/`, {}, {
       params: {
         property_manager_id: property_manager_id,
@@ -319,7 +318,7 @@ const getCompletelySignedForms = async (property_manager_id, property_id, rental
 }
 const generateCustomFields = async (userInfo) => {
   try {
-    const { data } = await axios.get(
+    const { data } = await axiosInstance.get(
       AppConfig.svc + `update_old_custom_field/`, {
         params: {
           property_manager_id: userInfo.sub,
@@ -333,7 +332,7 @@ const generateCustomFields = async (userInfo) => {
 const assignShadowUserToProperty = async (shadowUserID, propertyIDs, propertyManagerID, removedProperties) => {
   // console.log(shadowUserID,propertyIDs,propertyManagerID,removedProperties);
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `assign_properties_shadow_user/`, {
       shadow_user_id: shadowUserID,
       properties: propertyIDs,

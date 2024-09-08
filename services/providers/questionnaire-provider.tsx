@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../adapters/axiosInstance";
 import { QuestionnaireContext } from "../contexts/questionnaire-context";
 import config from "../../config/application.config";
 import { useUserInfo } from "../hooks/useUserInfo";
@@ -14,7 +14,7 @@ export function QuestionnaireContextProvider({ children }) {
   useEffect(() => {
     async function fetchAllQuestionnaires() {
       if (userInfo) {
-        const { data } = await axios.get(config.svc + `all_questionnaire`, {
+        const { data } = await axiosInstance.get(config.svc + `all_questionnaire`, {
           params: {
             property_manager_id: userInfo?.sub,
           },

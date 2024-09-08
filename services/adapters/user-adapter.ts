@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
-import axios, { all } from "axios";
+import axiosInstance from "./axiosInstance.js";
 import AppConfig from "../../config/application.config";
 import { makeHttpRequestJson } from "../../app/_utils/page_utils";
 
@@ -22,9 +22,9 @@ const onLogin = async (emailID) => {
       // We need to ensure axios sends the tokens.
       // This is the first call to the backend - TODO: find a more robust place to set
       // the default with credentials.
-      axios.defaults.withCredentials = true;
+      axiosInstance.defaults.withCredentials = true;
       const accessToken = Cookies.get('access_token');
-      const { data } = await axios.get(
+      const { data } = await axiosInstance.get(
         AppConfig.svc + `on_login/`,
         {
           params: {
@@ -58,7 +58,7 @@ const onLoginServerSide = async (emailID, id_token, access_token) => {
 }
 const deletePropertyManager = async(property_manager_id,delete_property_manager_id) =>{
   try {
-    const { data } = await axios.delete(AppConfig.svc + `remove_property_manager/`, {
+    const { data } = await axiosInstance.delete(AppConfig.svc + `remove_property_manager/`, {
       params: {
         property_manager_id,
         delete_property_manager_id

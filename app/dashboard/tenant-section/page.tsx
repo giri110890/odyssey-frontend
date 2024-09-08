@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../../services/adapters/axiosInstance";
 import AppConfig from "../../../config/application.config";
 import TableView from "../../../components/table/table";
 import Button from "../../../components/button/button";

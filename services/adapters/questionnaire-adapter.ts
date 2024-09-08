@@ -1,9 +1,9 @@
-import axios from "axios";
+import axiosInstance from "./axiosInstance.js";
 import AppConfig from "../../config/application.config";
 
 const deleteQuestionnaire = async (id, userInfo) => {
   try {
-    const { data } = await axios.delete(
+    const { data } = await axiosInstance.delete(
       AppConfig.svc + `delete_questionnaire/`,
       {
         params: {
@@ -20,7 +20,7 @@ const deleteQuestionnaire = async (id, userInfo) => {
 
 const addQuestionnaire = async (questionnaire, userInfo) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `create_questionnaire/`,
       questionnaire,
       {
@@ -36,7 +36,7 @@ const addQuestionnaire = async (questionnaire, userInfo) => {
 };
 const addAnswers = async (answer, tenant_id, rental_id, question_id,questionnaire_id) => {
   try {
-    const { data } = await axios.post(AppConfig.svc + `add_answer/`, answer, {
+    const { data } = await axiosInstance.post(AppConfig.svc + `add_answer/`, answer, {
       params: {
         tenant_id: tenant_id,
         rental_id: rental_id,
@@ -52,7 +52,7 @@ const addAnswers = async (answer, tenant_id, rental_id, question_id,questionnair
 const fetchAllQuestionnaires = async (userInfo) => {
   try {
     if (userInfo) {
-      const { data } = await axios.get(AppConfig.svc + `all_questionnaire`, {
+      const { data } = await axiosInstance.get(AppConfig.svc + `all_questionnaire`, {
         params: {
           property_manager_id: userInfo?.sub,
         },
@@ -66,7 +66,7 @@ const fetchAllQuestionnaires = async (userInfo) => {
 
 const getQuestionnaireByID = async (id, tenant_id) => {
   try {
-    const { data } = await axios.get(AppConfig.svc + `questionnaire/` + id, {
+    const { data } = await axiosInstance.get(AppConfig.svc + `questionnaire/` + id, {
       params: {
         tenant_id: tenant_id,
       },
@@ -79,7 +79,7 @@ const getQuestionnaireByID = async (id, tenant_id) => {
 };
 
 const getQuestionnaireByRentalID = async (id, tenant_id,questionnaire_id) => {
-  const { data } = await axios.get(
+  const { data } = await axiosInstance.get(
     AppConfig.svc + `rental_questionnaires/` + id,
     {
       params: {
@@ -98,7 +98,7 @@ const editQuestionnaire = async (
   questionnaire_id
 ) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `update_questionnaire/`,
       updatedQuestionnaire,
       {
@@ -116,7 +116,7 @@ const editQuestionnaire = async (
 
 const sendClientForm = async (rentalId, clientFormInfo,unitID) => {
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `send_client_form/`,
       clientFormInfo,
       {
@@ -134,7 +134,7 @@ const sendClientForm = async (rentalId, clientFormInfo,unitID) => {
 
 const getAnswersByTenantID = async (tenantID,rentalID) => {
   try {
-    const { data } = await axios.get(AppConfig.svc + `get_answers/`, {
+    const { data } = await axiosInstance.get(AppConfig.svc + `get_answers/`, {
       params: {
         tenant_id: tenantID,
         rental_id:rentalID
@@ -150,7 +150,7 @@ const getAnswersByTenantID = async (tenantID,rentalID) => {
 const getListingsByPropertyManagerID = async (userInfo) => {
   // console.log(userInfo);
   try {
-    const { data } = await axios.get(AppConfig.svc + `all_mapped_form/`, {
+    const { data } = await axiosInstance.get(AppConfig.svc + `all_mapped_form/`, {
       params: {
         property_manager_id: userInfo.sub,
       },
@@ -165,7 +165,7 @@ const getFormDataByQaId = async (qaID,userInfo) => {
   // console.log(qaID);
   // console.log(userInfo)
   try {
-    const { data } = await axios.get(AppConfig.svc + `get_form_data_by_qa_id/`, {
+    const { data } = await axiosInstance.get(AppConfig.svc + `get_form_data_by_qa_id/`, {
       params: {
         qaId: qaID,
         property_manager_id:userInfo.sub,
@@ -181,7 +181,7 @@ const getFormDataByQaIdAndPropertyId = async (qaID,propertyID) => {
   // console.log(qaID);
   // console.log(propertyID)
   try {
-    const { data } = await axios.get(AppConfig.svc + `get_form_data_by_qa_id/`, {
+    const { data } = await axiosInstance.get(AppConfig.svc + `get_form_data_by_qa_id/`, {
       params: {
         qaId: qaID,
         property_id:propertyID,
@@ -199,7 +199,7 @@ const assignQuestionnaireToForm = async (userInfo, formID, questionnaireID) => {
     // console.log(formID)
     // console.log(questionnaireID)
   try {
-    const { data } = await axios.post(
+    const { data } = await axiosInstance.post(
       AppConfig.svc + `link_form_with_questionnaire/`,
       {
           id:formID,
@@ -222,7 +222,7 @@ const reviewQuestionnaireForm = async (tenantID,rentalID,formID) =>{
   // console.log(tenantID)
   // console.log(formID)
   try {
-    const data = await axios.post(
+    const data = await axiosInstance.post(
       AppConfig.svc + `change_status`,{},{
         params:{
           tenant_id : tenantID,
